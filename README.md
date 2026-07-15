@@ -1,6 +1,7 @@
 # Task-Management-System
 A simple task management system built with mainly focusing on FastAPI and Angular
 
+Notion Link : https://app.notion.com/p/Task-Project-Management-System-39619643e562806790dcffd2f4190fa8?source=copy_link
 
 **Core Features**
 
