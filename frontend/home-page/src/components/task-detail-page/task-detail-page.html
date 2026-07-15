@@ -1,0 +1,87 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ taskTitle }}</h2>
+      <button class="close-btn" (click)="onClose()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="taskForm" class="task-form">
+        <div class="left-section">
+          <div class="section-block">
+            <label class="section-label" for="task-title">Title</label>
+            <input id="task-title" type="text" formControlName="title" class="field-input" />
+          </div>
+
+          <div class="section-block">
+            <label class="section-label" for="task-description">Description</label>
+            <textarea id="task-description" rows="4" formControlName="description" class="description-box"></textarea>
+          </div>
+
+          @if(taskId){
+          <div class="section-block">
+            <label class="section-label">Comments</label>
+            <div class="comment-input-box">
+              <div class="user-avatar">A</div>
+              <input type="text" #commentInput (keydown.enter)="addCommentInTask(commentInput.value)"
+                placeholder="Add a comment..." class="field-input" formControlName="commentsControl" />
+              <button mat-button (click)="addCommentInTask(commentInput.value)"><mat-icon>send</mat-icon></button>
+            </div>
+
+            <div class="comments-list">
+              @for(comment of comments; track comment){
+              <div class="comment-item">
+                <div class="user-avatar">{{ comment.user_name[0].toUpperCase() }}</div>
+                <div class="comment-content">
+                  <div class="comment-header">
+                    <span class="author">{{ comment.user_name }}</span>
+                    <span class="time">{{ comment.created_at | date: 'longDate'}}</span>
+                  </div>
+                  <p>{{ comment.comment }}</p>
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </div>
+
+        <div class="right-section">
+          <div class="section-block">
+            <label class="section-label" for="assigned-to">Assigned To</label>
+            <input id="assigned-to" type="text" formControlName="assigned_to" class="field-input" />
+          </div>
+
+          <div class="section-block">
+            <label class="section-label" for="task-status-right">Status</label>
+            <select id="task-status-right" formControlName="status" class="field-select">
+              <option value="To Do">To Do</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Done">Done</option>
+              <option value="Backlog">Backlog</option>
+            </select>
+          </div>
+
+          <div class="fields-row">
+            <div class="field-group">
+              <label for="task-due-date">Due Date</label>
+              <input id="task-due-date" type="text" placeholder="12 Oct" formControlName="due_date"
+                class="field-input" />
+            </div>
+            <div class="field-group">
+              <label for="task-priority">Priority</label>
+              <select id="task-priority" formControlName="priority" class="field-select">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button mat-raised-button color="primary" type="button" (click)="saveTask()">Save</button>
+    </div>
+  </div>
+</div>

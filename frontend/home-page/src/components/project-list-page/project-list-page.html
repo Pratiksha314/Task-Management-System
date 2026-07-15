@@ -1,0 +1,67 @@
+<section class="project-page">
+  <div class="project-header">
+    <div>
+      <p class="eyebrow">TaskFlow</p>
+      <h1>My Projects</h1>
+    </div>
+
+    <div class="project-actions">
+      <div class="search-input">
+        <span>🔍</span>
+        <input type="text" placeholder="Filter" readonly />
+      </div>
+      <button type="button" class="btn-primary" (click)="openCreateProjectDialog()">+ New Project</button>
+      <button type="button" class="btn-secondary">All Projects</button>
+    </div>
+  </div>
+
+  @if(isCreateDialogOpen){
+  <div class="dialog-backdrop" (click)="closeCreateProjectDialog()"></div>
+  <app-create-project-dialog
+    (closeDialog)="closeCreateProjectDialog()"
+    (projectCreated)="handleCreateProject($event)">
+  </app-create-project-dialog>
+  }
+
+  <div class="project-grid">
+    @if(projectList()?.length){
+      @for(project of projectList(); track project){
+      <article class="project-card" (click)="openDetailProjectTasks(project)">
+        <div class="card-top">
+          <div class="project-title">{{ project.name }}</div>
+          <span class="project-badge">Active</span>
+        </div>
+        <p class="project-description">{{ project.description }}</p>
+
+        <div class="owner-block">
+          <span class="owner-avatar">{{ project.owner_username[0].toUpperCase() }}</span>
+          <span class="owner-name">{{ project.owner_username | titlecase}}</span>
+        </div>
+
+        <div class="project-stats">
+          <div class="stat-block">
+            <span class="stat-value">{{ project.tasks.length }}</span>
+            <span class="stat-label">Tasks</span>
+          </div>
+          <div class="stat-block">
+            <span class="stat-value">{{ project.members?.length || 0 }}</span>
+            <span class="stat-label">Members</span>
+          </div>
+        </div>
+
+        <!-- <div class="progress-row">
+          <span>{{ project.progress }}%</span>
+          <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="project.progress"></div>
+          </div>
+        </div> -->
+      </article>
+
+      }
+    }
+    @else{
+      <span class="no-projects">No Projects Found !!</span>
+    }
+
+  </div>
+</section>

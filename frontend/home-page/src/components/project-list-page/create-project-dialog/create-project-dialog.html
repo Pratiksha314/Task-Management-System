@@ -1,0 +1,25 @@
+<div class="dialog-shell" role="dialog" aria-modal="true" aria-labelledby="create-project-title">
+  <div class="dialog-header">
+    <div>
+      <p class="eyebrow">TaskFlow</p>
+      <h2 id="create-project-title">Create New Project</h2>
+    </div>
+    <button type="button" class="icon-button" (click)="close()" aria-label="Close dialog">✕</button>
+  </div>
+
+  <form class="dialog-form" [formGroup]="projectForm" (submit)="onSubmit($event)">
+    <label for="project-name">Project Name</label>
+    <input id="project-name" type="text" formControlName="name" placeholder="Enter project name" required />
+
+    <label for="project-description">Description</label>
+    <textarea id="project-description" rows="4" formControlName="description" placeholder="Describe the project"></textarea>
+
+    <label for="project-owner">Owner</label>
+    <input id="project-owner" type="text" formControlName="owner_username" placeholder="Add username" />
+
+    <div class="dialog-actions">
+      <button type="button" class="btn-secondary" (click)="close()">Cancel</button>
+      <button type="submit" class="btn-primary">Create Project</button>
+    </div>
+  </form>
+</div>

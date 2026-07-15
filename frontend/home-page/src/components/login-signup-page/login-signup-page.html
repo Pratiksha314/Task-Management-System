@@ -1,0 +1,40 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <h2>TaskFlow</h2>
+    <h3>Manage tasks, Deliver results.</h3>
+    <div class="tabs">
+      <button type="button" class="tab-button" [class.active]="isLogin" (click)="showLogin()">
+        Login
+      </button>
+      <button type="button" class="tab-button" [class.active]="!isLogin" (click)="showSignup()">
+        Sign Up
+      </button>
+    </div>
+
+    @if (isLogin) {
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="auth-form">
+        <label for="login-email">Email</label>
+        <input id="login-email" type="email" placeholder="Enter your email" formControlName="email" />
+
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" placeholder="Enter your password" formControlName="hashed_password" />
+
+        <button type="submit" [disabled]="!loginForm.valid">Login</button>
+      </form>
+    }
+    @else {
+      <form [formGroup]="signupForm" (ngSubmit)="onSignup()" class="auth-form">
+        <label for="signup-name">Username</label>
+        <input id="signup-name" type="text" placeholder="Enter your username" formControlName="username" />
+
+        <label for="signup-email">Email</label>
+        <input id="signup-email" type="email" placeholder="Enter your email" formControlName="email" />
+
+        <label for="signup-password">Password</label>
+        <input id="signup-password" type="password" placeholder="Create a password" formControlName="hashed_password" />
+
+        <button type="submit" [disabled]="!signupForm.valid">Sign Up</button>
+      </form>
+    }
+  </div>
+</div>

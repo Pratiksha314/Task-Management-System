@@ -1,0 +1,48 @@
+<div class="kanban-wrapper">
+  <header class="kanban-header">
+    <h1>{{ projectTitle }}</h1>
+    <div class="header-right">
+      <div class="search-box">
+        <span>🔍</span>
+        <input type="text" placeholder="Filter" readonly />
+      </div>
+      <button mat-flat-button color="primary" (click)="openTaskDialog()">
+        <mat-icon>add</mat-icon>
+        New Task
+      </button>
+    </div>
+  </header>
+
+  <div class="kanban-board">
+    @for (column of columns; track column) {
+    <div class="column">
+      <div class="column-header">
+        <h2>{{ column }}</h2>
+        <span class="column-menu">⋯</span>
+      </div>
+
+      <div class="tasks-container">
+        @for (task of getTasksByStatus(column); track task.id) {
+        <div class="task-card" (click)="openTaskDialog(task)">
+          <h3 class="task-title">{{ task.title }}</h3>
+          <div class="task-meta">
+            <div class="assigned-user">
+              <div class="user-avatar">{{ task.assigned_to?.[0]?.toUpperCase() ?? 'U'}}</div>
+              <span>{{ task.assigned_to ?? 'Unassigned' }}</span>
+            </div>
+          </div>
+          <div class="task-date">Due Date <span>{{ task.due_date ?? '-' }}</span></div>
+          <div class="task-badges">
+            <span class="priority-badge" [class]="task.priority?.toLowerCase()">
+              {{ task.priority }}
+            </span>
+            <span class="status-badge">{{ task.status }}</span>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+    }
+  </div>
+
+</div>
